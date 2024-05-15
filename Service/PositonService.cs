@@ -2,36 +2,48 @@
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Service
 {
     public class PositionService : IPositionService
     {
-        private readonly IPositionRepository _positionRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PositionService(IPositionRepository positionRepository)
+        public PositionService(IUnitOfWork unitOfWork)
         {
-            _positionRepository = positionRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public PositionDTO AddPosition(PositionDTO position)
+        public async Task<PositionDTO> AddPositionAsync(PositionDTO position)
         {
-            return _positionRepository.AddPosition(position);
+            var addedPosition = await _unitOfWork.PositionRepository.AddPositionAsync(position);
+            await _unitOfWork.SaveChangesAsync();
+            return addedPosition;
         }
 
-        public bool DeletePosition(int positionId)
+        public async Task<bool> DeletePositionAsync(int positionId)
         {
-            return _positionRepository.DeletePosition(positionId);
+            var result = await _unitOfWork.PositionRepository.DeletePositionAsync(positionId);
+            await _unitOfWork.SaveChangesAsync();
+            return result;
         }
 
-        public List<PositionDTO> GetAllPositions()
+        public async Task<List<PositionDTO>> GetAllPositionsAsync()
         {
-            return _positionRepository.GetAllPositions();
+            return await _unitOfWork.PositionRepository.GetAllPositionsAsync();
         }
 
-        public PositionDTO UpdatePosition(PositionDTO position)
+        public async Task<PositionDTO> UpdatePositionAsync(PositionDTO position)
         {
-            return _positionRepository.UpdatePosition(position);
+            var updatedPosition = await _unitOfWork.PositionRepository.UpdatePositionAsync(position);
+            await _unitOfWork.SaveChangesAsync();
+            return updatedPosition;
+        }
+
+        public async Task<PositionDTO> GetPositionByIdAsync(int id)
+        {
+            return await _unitOfWork.PositionRepository.GetPositionByIdAsync(id);
         }
     }
 }

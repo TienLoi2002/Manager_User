@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Manager_User_API.DTO;
+﻿using Manager_User_API.DTO;
 using Manager_User_API.IServices;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -18,28 +19,28 @@ namespace Manager_User_API.Controllers
 
         [HttpGet]
         [Route("/api/[controller]/get-all-users")]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var users = _userService.GetAllUsers();
+            var users = await _userService.GetAllAsync();
             return Ok(users);
         }
 
         [HttpPost]
         [Route("/api/[controller]/add-user")]
-        public IActionResult AddUser([FromBody] UserDTO user)
+        public async Task<IActionResult> AddAsync([FromBody] UserDTO user)
         {
-            var createdUser = _userService.AddUser(user);
+            var createdUser = await _userService.AddAsync(user);
             if (createdUser == null)
             {
                 return BadRequest("Unable to add user");
             }
-            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = createdUser.Id }, createdUser);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var user = _userService.GetUserById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -48,13 +49,13 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] UserDTO user)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UserDTO user)
         {
             if (id != user.Id)
             {
                 return BadRequest("ID mismatch");
             }
-            var updatedUser = _userService.UpdateUser(user);
+            var updatedUser = await _userService.UpdateAsync(user);
             if (updatedUser == null)
             {
                 return NotFound();
@@ -63,9 +64,9 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            bool result = _userService.DeleteUser(id);
+            bool result = await _userService.DeleteAsync(id);
             if (!result)
             {
                 return NotFound("User not found");

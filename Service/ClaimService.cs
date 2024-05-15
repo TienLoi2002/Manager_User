@@ -1,37 +1,44 @@
-﻿using Manager_User_API.DTO;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
-using System.Collections.Generic;
 
 namespace Manager_User_API.Service
 {
     public class ClaimService : IClaimService
     {
-        private readonly IClaimRepository _claimRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ClaimService(IClaimRepository claimRepository)
+        public ClaimService(IUnitOfWork unitOfWork)
         {
-            _claimRepository = claimRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public ClaimDTO AddClaim(ClaimDTO claim)
+        public async Task<ClaimDTO> AddClaimAsync(ClaimDTO claim)
         {
-            return _claimRepository.AddClaim(claim);
+            var addedClaim = await _unitOfWork.ClaimRepository.AddClaimAsync(claim);
+            await _unitOfWork.SaveChangesAsync();
+            return addedClaim;
         }
 
-        public bool DeleteClaim(int claimId)
+        public async Task<bool> DeleteClaimAsync(int claimId)
         {
-            return _claimRepository.DeleteClaim(claimId);
+            var result = await _unitOfWork.ClaimRepository.DeleteClaimAsync(claimId);
+            await _unitOfWork.SaveChangesAsync();
+            return result;
         }
 
-        public List<ClaimDTO> GetAllClaims()
+        public async Task<List<ClaimDTO>> GetAllClaimsAsync()
         {
-            return _claimRepository.GetAllClaims();
+            return await _unitOfWork.ClaimRepository.GetAllClaimsAsync();
         }
 
-        public ClaimDTO UpdateClaim(ClaimDTO claim)
+        public async Task<ClaimDTO> UpdateClaimAsync(ClaimDTO claim)
         {
-            return _claimRepository.UpdateClaim(claim);
+            var updatedClaim = await _unitOfWork.ClaimRepository.UpdateClaimAsync(claim);
+            await _unitOfWork.SaveChangesAsync();
+            return updatedClaim;
         }
     }
 }

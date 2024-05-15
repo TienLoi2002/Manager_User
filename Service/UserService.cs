@@ -2,41 +2,48 @@
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Service
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public UserDTO AddUser(UserDTO user)
+        public async Task<UserDTO> AddAsync(UserDTO user)
         {
-            return _userRepository.AddUser(user);
+            var addedUser = await _unitOfWork.UserRepository.AddAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+            return addedUser;
         }
 
-        public bool DeleteUser(int userId)
+        public async Task<bool> DeleteAsync(int userId)
         {
-            return _userRepository.DeleteUser(userId);
+            var result = await _unitOfWork.UserRepository.DeleteAsync(userId);
+            await _unitOfWork.SaveChangesAsync();
+            return result;
         }
 
-        public List<UserDTO> GetAllUsers()
+        public async Task<List<UserDTO>> GetAllAsync()
         {
-            return _userRepository.GetAllUsers();
+            return await _unitOfWork.UserRepository.GetAllAsync();
         }
 
-        public UserDTO UpdateUser(UserDTO user)
+        public async Task<UserDTO> GetByIdAsync(int userId)
         {
-            return _userRepository.UpdateUser(user);
+            return await _unitOfWork.UserRepository.GetByIdAsync(userId);
         }
 
-        public UserDTO GetUserById(int userId)
+        public async Task<UserDTO> UpdateAsync(UserDTO user)
         {
-            return _userRepository.GetUserById(userId);
+            var updatedUser = await _unitOfWork.UserRepository.UpdateAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+            return updatedUser;
         }
     }
 }

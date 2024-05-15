@@ -1,41 +1,49 @@
 ﻿using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Service
 {
     public class UserRoleService : IUserRoleService
     {
-        private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserRoleService(IUserRoleRepository userRoleRepository)
+        public UserRoleService(IUnitOfWork unitOfWork)
         {
-            _userRoleRepository = userRoleRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public UserRoleDTO AddUserRole(UserRoleDTO userRole)
+        public async Task<UserRoleDTO> AddUserRoleAsync(UserRoleDTO userRole)
         {
-            return _userRoleRepository.AddUserRole(userRole);
+            var addedUserRole = await _unitOfWork.UserRoleRepository.AddUserRoleAsync(userRole);
+            await _unitOfWork.SaveChangesAsync();
+            return addedUserRole;
         }
 
-        public bool DeleteUserRole(int userId, int roleId)
+        public async Task<bool> DeleteUserRoleAsync(int userId, int roleId)
         {
-            return _userRoleRepository.DeleteUserRole(userId, roleId);
+            var result = await _unitOfWork.UserRoleRepository.DeleteUserRoleAsync(userId, roleId);
+            await _unitOfWork.SaveChangesAsync();
+            return result;
         }
 
-        public List<UserRoleDTO> GetAllUserRoles()
+        public async Task<List<UserRoleDTO>> GetAllUserRolesAsync()
         {
-            return _userRoleRepository.GetAllUserRoles();
+            return await _unitOfWork.UserRoleRepository.GetAllUserRolesAsync();
         }
 
-        public UserRoleDTO GetUserRoleById(int userId, int roleId)
+        public async Task<UserRoleDTO> GetUserRoleByIdAsync(int userId, int roleId)
         {
-            return _userRoleRepository.GetUserRoleById(userId, roleId);
+            return await _unitOfWork.UserRoleRepository.GetUserRoleByIdAsync(userId, roleId);
         }
 
-        public UserRoleDTO UpdateUserRole(UserRoleDTO userRole)
+        public async Task<UserRoleDTO> UpdateUserRoleAsync(UserRoleDTO userRole)
         {
-            return _userRoleRepository.UpdateUserRole(userRole);
+            var updatedUserRole = await _unitOfWork.UserRoleRepository.UpdateUserRoleAsync(userRole);
+            await _unitOfWork.SaveChangesAsync();
+            return updatedUserRole;
         }
     }
 }

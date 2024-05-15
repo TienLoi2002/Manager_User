@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Manager_User_API.DTO;
+﻿using Manager_User_API.DTO;
 using Manager_User_API.IServices;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PositionController : Controller
+    public class PositionController : ControllerBase
     {
         private readonly IPositionService _positionService;
 
@@ -16,32 +17,28 @@ namespace Manager_User_API.Controllers
             _positionService = positionService;
         }
 
-        [HttpGet]
-        [Route("/api/[controller]/get-all-positions")]
-        public IActionResult GetAllPositions()
+        [HttpGet("get-all-positions")]
+        public async Task<IActionResult> GetAllPositionsAsync()
         {
-            var positions = _positionService.GetAllPositions();
+            var positions = await _positionService.GetAllPositionsAsync();
             return Ok(positions);
         }
 
-        [HttpPost]
-        [Route("/api/[controller]/add-position")]
-
-        public IActionResult AddPosition([FromBody] PositionDTO position)
+        [HttpPost("add-position")]
+        public async Task<IActionResult> AddPositionAsync([FromBody] PositionDTO position)
         {
-            var createdPosition = _positionService.AddPosition(position);
+            var createdPosition = await _positionService.AddPositionAsync(position);
             if (createdPosition == null)
             {
                 return BadRequest("Unable to add position");
             }
-            return CreatedAtAction(nameof(GetPositionById), new { id = createdPosition.PositionId }, createdPosition);
+            return CreatedAtAction(nameof(GetPositionByIdAsync), new { id = createdPosition.PositionId }, createdPosition);
         }
 
         [HttpGet("{id}")]
-
-        public IActionResult GetPositionById(int id)
+        public async Task<IActionResult> GetPositionByIdAsync(int id)
         {
-            var position = _positionService.GetAllPositions().Find(p => p.PositionId == id);
+            var position = await _positionService.GetPositionByIdAsync(id);
             if (position == null)
             {
                 return NotFound();
@@ -50,14 +47,13 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{id}")]
-
-        public IActionResult UpdatePosition(int id, [FromBody] PositionDTO position)
+        public async Task<IActionResult> UpdatePositionAsync(int id, [FromBody] PositionDTO position)
         {
             if (id != position.PositionId)
             {
                 return BadRequest("ID mismatch");
             }
-            var updatedPosition = _positionService.UpdatePosition(position);
+            var updatedPosition = await _positionService.UpdatePositionAsync(position);
             if (updatedPosition == null)
             {
                 return NotFound();
@@ -66,10 +62,9 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
-
-        public IActionResult DeletePosition(int id)
+        public async Task<IActionResult> DeletePositionAsync(int id)
         {
-            bool result = _positionService.DeletePosition(id);
+            bool result = await _positionService.DeletePositionAsync(id);
             if (!result)
             {
                 return NotFound("Position not found");

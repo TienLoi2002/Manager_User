@@ -35,6 +35,9 @@ namespace Manager_User
 
         private void RegisterServices(IServiceCollection services)
         {
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleService, RoleService>();
 

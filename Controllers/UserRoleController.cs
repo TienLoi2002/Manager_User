@@ -2,6 +2,7 @@
 using Manager_User_API.DTO;
 using Manager_User_API.IServices;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Controllers
 {
@@ -17,27 +18,27 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllUserRoles()
+        public async Task<IActionResult> GetAllUserRoles()
         {
-            var userRoles = _userRoleService.GetAllUserRoles();
+            var userRoles = await _userRoleService.GetAllUserRolesAsync();
             return Ok(userRoles);
         }
 
         [HttpPost]
-        public IActionResult AddUserRole([FromBody] UserRoleDTO userRole)
+        public async Task<IActionResult> AddUserRole([FromBody] UserRoleDTO userRole)
         {
-            var createdUserRole = _userRoleService.AddUserRole(userRole);
+            var createdUserRole = await _userRoleService.AddUserRoleAsync(userRole);
             if (createdUserRole == null)
             {
                 return BadRequest("Unable to add user role");
             }
-            return CreatedAtAction(nameof(GetUserRoleById), new { id = createdUserRole.UserId }, createdUserRole);
+            return CreatedAtAction(nameof(GetUserRoleById), new { userId = createdUserRole.UserId, roleId = createdUserRole.RoleId }, createdUserRole);
         }
 
         [HttpGet("{userId}/{roleId}")]
-        public IActionResult GetUserRoleById(int userId, int roleId)
+        public async Task<IActionResult> GetUserRoleById(int userId, int roleId)
         {
-            var userRole = _userRoleService.GetUserRoleById(userId, roleId);
+            var userRole = await _userRoleService.GetUserRoleByIdAsync(userId, roleId);
             if (userRole == null)
             {
                 return NotFound();
@@ -46,13 +47,13 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{userId}/{roleId}")]
-        public IActionResult UpdateUserRole(int userId, int roleId, [FromBody] UserRoleDTO userRole)
+        public async Task<IActionResult> UpdateUserRole(int userId, int roleId, [FromBody] UserRoleDTO userRole)
         {
             if (userId != userRole.UserId || roleId != userRole.RoleId)
             {
                 return BadRequest("ID mismatch");
             }
-            var updatedUserRole = _userRoleService.UpdateUserRole(userRole);
+            var updatedUserRole = await _userRoleService.UpdateUserRoleAsync(userRole);
             if (updatedUserRole == null)
             {
                 return NotFound();
@@ -61,9 +62,9 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{userId}/{roleId}")]
-        public IActionResult DeleteUserRole(int userId, int roleId)
+        public async Task<IActionResult> DeleteUserRole(int userId, int roleId)
         {
-            bool result = _userRoleService.DeleteUserRole(userId, roleId);
+            bool result = await _userRoleService.DeleteUserRoleAsync(userId, roleId);
             if (!result)
             {
                 return NotFound("User role not found");

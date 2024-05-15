@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Manager_User_API.DTO;
 using Manager_User_API.IServices;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Controllers
 {
@@ -16,20 +16,17 @@ namespace Manager_User_API.Controllers
             _roleService = roleService;
         }
 
-        [HttpGet]
-        [Route("/api/[controller]/get-all-role")]
-        public IActionResult GetAllRoles()
+        [HttpGet("get-all-role")]
+        public async Task<IActionResult> GetAllRoles()
         {
-            var roles = _roleService.GetAllRoles();
+            var roles = await _roleService.GetAllRolesAsync();
             return Ok(roles);
         }
 
-        [HttpPost]
-        [Route("/api/[controller]/add-role")]
-
-        public IActionResult AddRole([FromBody] RoleDTO role)
+        [HttpPost("add-role")]
+        public async Task<IActionResult> AddRole([FromBody] RoleDTO role)
         {
-            var createdRole = _roleService.AddRole(role);
+            var createdRole = await _roleService.AddRoleAsync(role);
             if (createdRole == null)
             {
                 return BadRequest("Unable to add role");
@@ -38,10 +35,10 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("{id}")]
-
-        public IActionResult GetRoleById(int id)
+        public async Task<IActionResult> GetRoleById(int id)
         {
-            var role = _roleService.GetAllRoles().Find(r => r.RoleId == id);
+            var roles = await _roleService.GetAllRolesAsync();
+            var role = roles.Find(r => r.RoleId == id);
             if (role == null)
             {
                 return NotFound();
@@ -50,14 +47,13 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{id}")]
-
-        public IActionResult UpdateRole(int id, [FromBody] RoleDTO role)
+        public async Task<IActionResult> UpdateRole(int id, [FromBody] RoleDTO role)
         {
             if (id != role.RoleId)
             {
                 return BadRequest("ID mismatch");
             }
-            var updatedRole = _roleService.UpdateRole(role);
+            var updatedRole = await _roleService.UpdateRoleAsync(role);
             if (updatedRole == null)
             {
                 return NotFound();
@@ -66,10 +62,9 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
-
-        public IActionResult DeleteRole(int id)
+        public async Task<IActionResult> DeleteRole(int id)
         {
-            bool result = _roleService.DeleteRole(id);
+            bool result = await _roleService.DeleteRoleAsync(id);
             if (!result)
             {
                 return NotFound("Role not found");

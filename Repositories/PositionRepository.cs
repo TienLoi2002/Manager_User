@@ -3,6 +3,9 @@ using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_Data;
 using Manager_User_API.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Repositories
 {
@@ -17,44 +20,49 @@ namespace Manager_User_API.Repositories
             _mapper = mapper;
         }
 
-        public PositionDTO AddPosition(PositionDTO position)
+        public async Task<PositionDTO> AddPositionAsync(PositionDTO position)
         {
             var positionEntity = _mapper.Map<Position>(position);
             _context.Positions.Add(positionEntity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<PositionDTO>(positionEntity);
         }
 
-        public bool DeletePosition(int positionId)
+        public async Task<bool> DeletePositionAsync(int positionId)
         {
-            var position = _context.Positions.Find(positionId);
+            var position = await _context.Positions.FindAsync(positionId);
             if (position == null)
             {
                 return false;
             }
 
             _context.Positions.Remove(position);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public List<PositionDTO> GetAllPositions()
+        public async Task<List<PositionDTO>> GetAllPositionsAsync()
         {
-            var positions = _context.Positions.ToList();
+            var positions = await _context.Positions.ToListAsync();
             return _mapper.Map<List<PositionDTO>>(positions);
         }
 
-        public PositionDTO UpdatePosition(PositionDTO position)
+        public async Task<PositionDTO> UpdatePositionAsync(PositionDTO position)
         {
-            var positionToUpdate = _context.Positions.Find(position.PositionId);
+            var positionToUpdate = await _context.Positions.FindAsync(position.PositionId);
             if (positionToUpdate == null)
             {
                 return null;
             }
 
             _mapper.Map(position, positionToUpdate);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<PositionDTO>(positionToUpdate);
+        }
+        public async Task<PositionDTO> GetPositionByIdAsync(int id)
+        {
+            var position = await _context.Positions.FindAsync(id);
+            return _mapper.Map<PositionDTO>(position);
         }
     }
 }

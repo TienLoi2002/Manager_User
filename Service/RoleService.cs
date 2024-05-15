@@ -1,36 +1,51 @@
 ﻿using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Service
 {
     public class RoleService : IRoleService
     {
-        private readonly IRoleRepository _roleRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RoleService(IRoleRepository roleRepository)
+        public RoleService(IUnitOfWork unitOfWork)
         {
-            _roleRepository = roleRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public RoleDTO AddRole(RoleDTO role)
+        public async Task<RoleDTO> AddRoleAsync(RoleDTO role)
         {
-            return _roleRepository.AddRole(role);
+            var addedRole = await _unitOfWork.RoleRepository.AddRoleAsync(role);
+            await _unitOfWork.SaveChangesAsync();
+            return addedRole;
         }
 
-        public bool DeleteRole(int roleId)
+        public async Task<bool> DeleteRoleAsync(int roleId)
         {
-            return _roleRepository.DeleteRole(roleId);
+            var result = await _unitOfWork.RoleRepository.DeleteRoleAsync(roleId);
+            if (result)
+            {
+                await _unitOfWork.SaveChangesAsync();
+            }
+            return result;
         }
 
-        public List<RoleDTO> GetAllRoles()
+        public async Task<List<RoleDTO>> GetAllRolesAsync()
         {
-            return _roleRepository.GetAllRoles();
+            var roles = await _unitOfWork.RoleRepository.GetAllRolesAsync();
+            return roles;
         }
 
-        public RoleDTO UpdateRole(RoleDTO role)
+        public async Task<RoleDTO?> UpdateRoleAsync(RoleDTO role)
         {
-            return _roleRepository.UpdateRole(role);
+            var updatedRole = await _unitOfWork.RoleRepository.UpdateRoleAsync(role);
+            if (updatedRole != null)
+            {
+                await _unitOfWork.SaveChangesAsync();
+            }
+            return updatedRole;
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using Manager_User_API.DTO;
-using Manager_User_API.IRepositories;
 using Manager_User_API.Model;
+using Manager_User_API.IRepositories;
 using Manager_User_Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manager_User_API.Repositories
 {
@@ -17,43 +19,43 @@ namespace Manager_User_API.Repositories
             _mapper = mapper;
         }
 
-        public ClaimDTO AddClaim(ClaimDTO claim)
+        public async Task<ClaimDTO> AddClaimAsync(ClaimDTO claim)
         {
             var claimEntity = _mapper.Map<Claim>(claim);
             _context.Claims.Add(claimEntity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<ClaimDTO>(claimEntity);
         }
 
-        public bool DeleteClaim(int claimId)
+        public async Task<bool> DeleteClaimAsync(int claimId)
         {
-            var claim = _context.Claims.Find(claimId);
+            var claim = await _context.Claims.FindAsync(claimId);
             if (claim == null)
             {
                 return false;
             }
 
             _context.Claims.Remove(claim);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public List<ClaimDTO> GetAllClaims()
+        public async Task<List<ClaimDTO>> GetAllClaimsAsync()
         {
-            var claims = _context.Claims.ToList();
+            var claims = await _context.Claims.ToListAsync();
             return _mapper.Map<List<ClaimDTO>>(claims);
         }
 
-        public ClaimDTO UpdateClaim(ClaimDTO claim)
+        public async Task<ClaimDTO> UpdateClaimAsync(ClaimDTO claim)
         {
-            var claimToUpdate = _context.Claims.Find(claim.ClaimId);
+            var claimToUpdate = await _context.Claims.FindAsync(claim.ClaimId);
             if (claimToUpdate == null)
             {
                 return null;
             }
 
             _mapper.Map(claim, claimToUpdate);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<ClaimDTO>(claimToUpdate);
         }
     }

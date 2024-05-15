@@ -3,6 +3,9 @@ using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_Data;
 using Manager_User_API.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Repositories
 {
@@ -17,18 +20,17 @@ namespace Manager_User_API.Repositories
             _mapper = mapper;
         }
 
-        public UserRoleDTO AddUserRole(UserRoleDTO userRole)
+        public async Task<UserRoleDTO> AddUserRoleAsync(UserRoleDTO userRole)
         {
             var userRoleEntity = _mapper.Map<UserRole>(userRole);
             _context.UserRoles.Add(userRoleEntity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<UserRoleDTO>(userRoleEntity);
         }
 
-        public bool DeleteUserRole(int userId, int roleId)
+        public async Task<bool> DeleteUserRoleAsync(int userId, int roleId)
         {
-            var userRoleToDelete = _context.UserRoles
-                .FirstOrDefault(ur => ur.UserId == userId && ur.RoleId == roleId);
+            var userRoleToDelete = await _context.UserRoles.FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId);
 
             if (userRoleToDelete == null)
             {
@@ -36,29 +38,26 @@ namespace Manager_User_API.Repositories
             }
 
             _context.UserRoles.Remove(userRoleToDelete);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public List<UserRoleDTO> GetAllUserRoles()
+        public async Task<List<UserRoleDTO>> GetAllUserRolesAsync()
         {
-            var userRoles = _context.UserRoles.ToList();
+            var userRoles = await _context.UserRoles.ToListAsync();
             return _mapper.Map<List<UserRoleDTO>>(userRoles);
         }
 
-        public UserRoleDTO GetUserRoleById(int userId, int roleId)
+        public async Task<UserRoleDTO> GetUserRoleByIdAsync(int userId, int roleId)
         {
-            var userRole = _context.UserRoles
-                .FirstOrDefault(ur => ur.UserId == userId && ur.RoleId == roleId);
-
+            var userRole = await _context.UserRoles.FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId);
             return _mapper.Map<UserRoleDTO>(userRole);
         }
 
-        public UserRoleDTO UpdateUserRole(UserRoleDTO userRole)
+        public async Task<UserRoleDTO> UpdateUserRoleAsync(UserRoleDTO userRole)
         {
-            var userRoleToUpdate = _context.UserRoles
-                .FirstOrDefault(ur => ur.UserId == userRole.UserId && ur.RoleId == userRole.RoleId);
+            var userRoleToUpdate = await _context.UserRoles.FirstOrDefaultAsync(ur => ur.UserId == userRole.UserId && ur.RoleId == userRole.RoleId);
 
             if (userRoleToUpdate == null)
             {
@@ -66,7 +65,7 @@ namespace Manager_User_API.Repositories
             }
 
             _mapper.Map(userRole, userRoleToUpdate);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<UserRoleDTO>(userRoleToUpdate);
         }
     }

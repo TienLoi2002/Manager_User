@@ -1,12 +1,14 @@
 ﻿using Manager_User_API.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.IServices
 {
     public interface IRoleService
     {
-        List<RoleDTO> GetAllRoles();
-        RoleDTO AddRole(RoleDTO role);
-        RoleDTO UpdateRole(RoleDTO role);
-        bool DeleteRole(int roleId);
+        Task<List<RoleDTO>> GetAllRolesAsync();
+        Task<RoleDTO> AddRoleAsync(RoleDTO role);
+        Task<RoleDTO?> UpdateRoleAsync(RoleDTO role);
+        Task<bool> DeleteRoleAsync(int roleId);
     }
 }

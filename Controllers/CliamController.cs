@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Manager_User_API.DTO;
 using Manager_User_API.IServices;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Manager_User_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClaimController : Controller
+    public class ClaimController : ControllerBase
     {
         private readonly IClaimService _claimService;
 
@@ -16,20 +17,17 @@ namespace Manager_User_API.Controllers
             _claimService = claimService;
         }
 
-        [HttpGet]
-        [Route("/api/[controller]/get-all-claims")]
-        public IActionResult GetAllClaims()
+        [HttpGet("get-all-claims")]
+        public async Task<IActionResult> GetAllClaims()
         {
-            var claims = _claimService.GetAllClaims();
+            var claims = await _claimService.GetAllClaimsAsync();
             return Ok(claims);
         }
 
-        [HttpPost]
-        [Route("/api/[controller]/add-claim")]
-
-        public IActionResult AddClaim([FromBody] ClaimDTO claim)
+        [HttpPost("add-claim")]
+        public async Task<IActionResult> AddClaim([FromBody] ClaimDTO claim)
         {
-            var createdClaim = _claimService.AddClaim(claim);
+            var createdClaim = await _claimService.AddClaimAsync(claim);
             if (createdClaim == null)
             {
                 return BadRequest("Unable to add claim");
@@ -38,10 +36,10 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("{id}")]
-
-        public IActionResult GetClaimById(int id)
+        public async Task<IActionResult> GetClaimById(int id)
         {
-            var claim = _claimService.GetAllClaims().Find(c => c.ClaimId == id);
+            var claims = await _claimService.GetAllClaimsAsync();
+            var claim = claims.Find(c => c.ClaimId == id);
             if (claim == null)
             {
                 return NotFound();
@@ -50,14 +48,13 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{id}")]
-
-        public IActionResult UpdateClaim(int id, [FromBody] ClaimDTO claim)
+        public async Task<IActionResult> UpdateClaim(int id, [FromBody] ClaimDTO claim)
         {
             if (id != claim.ClaimId)
             {
                 return BadRequest("ID mismatch");
             }
-            var updatedClaim = _claimService.UpdateClaim(claim);
+            var updatedClaim = await _claimService.UpdateClaimAsync(claim);
             if (updatedClaim == null)
             {
                 return NotFound();
@@ -66,10 +63,9 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
-
-        public IActionResult DeleteClaim(int id)
+        public async Task<IActionResult> DeleteClaim(int id)
         {
-            bool result = _claimService.DeleteClaim(id);
+            bool result = await _claimService.DeleteClaimAsync(id);
             if (!result)
             {
                 return NotFound("Claim not found");

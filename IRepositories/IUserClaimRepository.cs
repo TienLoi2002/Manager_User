@@ -1,4 +1,5 @@
 ﻿using Manager_User_API.DTO;
+using System.Collections.Generic;
 
 namespace Manager_User_API.IRepositories
 {

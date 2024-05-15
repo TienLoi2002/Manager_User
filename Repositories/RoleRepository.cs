@@ -3,58 +3,58 @@ using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_Data;
 using Manager_User_API.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public RoleRepository(ApplicationDbContext dbContext, IMapper mapper) 
+        public RoleRepository(ApplicationDbContext context, IMapper mapper)
         {
-            _context = dbContext;
+            _context = context;
             _mapper = mapper;
         }
-        public RoleDTO AddRole(RoleDTO role)
+
+        public async Task<RoleDTO> AddRoleAsync(RoleDTO role)
         {
             var roleAdd = _mapper.Map<Role>(role);
-            _context.Roles.Add(roleAdd);
-            _context.SaveChanges();
-            var newRoleDto = _mapper.Map<RoleDTO>(roleAdd);
-            return newRoleDto;
+            await _context.Roles.AddAsync(roleAdd);
+            return _mapper.Map<RoleDTO>(roleAdd);
         }
 
-        public bool DeleteRole(int roleId)
+        public async Task<bool> DeleteRoleAsync(int roleId)
         {
-            var role = _context.Roles.Find(roleId);
+            var role = await _context.Roles.FindAsync(roleId);
             if (role == null)
             {
                 return false;
             }
 
             _context.Roles.Remove(role);
-            _context.SaveChanges();
             return true;
         }
 
-        public List<RoleDTO> GetAllRoles()
+        public async Task<List<RoleDTO>> GetAllRolesAsync()
         {
-            var roles = _context.Roles.ToList();
+            var roles = await _context.Roles.ToListAsync();
             return _mapper.Map<List<RoleDTO>>(roles);
         }
 
-        public RoleDTO? UpdateRole(RoleDTO role)
+        public async Task<RoleDTO?> UpdateRoleAsync(RoleDTO role)
         {
-            var roleUpdate = _context.Roles.Find(role.RoleId);
-            if (role == null)
+            var roleUpdate = await _context.Roles.FindAsync(role.RoleId);
+            if (roleUpdate == null)
             {
                 return null;
             }
 
             _mapper.Map(role, roleUpdate);
-            _context.SaveChanges();
             return _mapper.Map<RoleDTO>(roleUpdate);
         }
     }

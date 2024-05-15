@@ -1,37 +1,44 @@
-﻿using Manager_User_API.DTO;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
-using System.Collections.Generic;
 
 namespace Manager_User_API.Service
 {
     public class FormService : IFormService
     {
-        private readonly IFormRepository _formRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public FormService(IFormRepository formRepository)
+        public FormService(IUnitOfWork unitOfWork)
         {
-            _formRepository = formRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public FormDTO AddForm(FormDTO form)
+        public async Task<FormDTO> AddFormAsync(FormDTO form)
         {
-            return _formRepository.AddForm(form);
+            var addedForm = await _unitOfWork.FormRepository.AddFormAsync(form);
+            await _unitOfWork.SaveChangesAsync();
+            return addedForm;
         }
 
-        public bool DeleteForm(int formId)
+        public async Task<bool> DeleteFormAsync(int formId)
         {
-            return _formRepository.DeleteForm(formId);
+            var result = await _unitOfWork.FormRepository.DeleteFormAsync(formId);
+            await _unitOfWork.SaveChangesAsync();
+            return result;
         }
 
-        public List<FormDTO> GetAllForms()
+        public async Task<List<FormDTO>> GetAllFormsAsync()
         {
-            return _formRepository.GetAllForms();
+            return await _unitOfWork.FormRepository.GetAllFormsAsync();
         }
 
-        public FormDTO UpdateForm(FormDTO form)
+        public async Task<FormDTO> UpdateFormAsync(FormDTO form)
         {
-            return _formRepository.UpdateForm(form);
+            var updatedForm = await _unitOfWork.FormRepository.UpdateFormAsync(form);
+            await _unitOfWork.SaveChangesAsync();
+            return updatedForm;
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
-using Manager_User_Data;
 using Manager_User_API.Model;
+using Manager_User_Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manager_User_API.Repositories
 {
@@ -17,43 +20,43 @@ namespace Manager_User_API.Repositories
             _mapper = mapper;
         }
 
-        public FormDTO AddForm(FormDTO form)
+        public async Task<FormDTO> AddFormAsync(FormDTO form)
         {
             var formEntity = _mapper.Map<Form>(form);
             _context.Forms.Add(formEntity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<FormDTO>(formEntity);
         }
 
-        public bool DeleteForm(int formId)
+        public async Task<bool> DeleteFormAsync(int formId)
         {
-            var form = _context.Forms.Find(formId);
+            var form = await _context.Forms.FindAsync(formId);
             if (form == null)
             {
                 return false;
             }
 
             _context.Forms.Remove(form);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public List<FormDTO> GetAllForms()
+        public async Task<List<FormDTO>> GetAllFormsAsync()
         {
-            var forms = _context.Forms.ToList();
+            var forms = await _context.Forms.ToListAsync();
             return _mapper.Map<List<FormDTO>>(forms);
         }
 
-        public FormDTO UpdateForm(FormDTO form)
+        public async Task<FormDTO> UpdateFormAsync(FormDTO form)
         {
-            var formToUpdate = _context.Forms.Find(form.FormId);
+            var formToUpdate = await _context.Forms.FindAsync(form.FormId);
             if (formToUpdate == null)
             {
                 return null;
             }
 
             _mapper.Map(form, formToUpdate);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<FormDTO>(formToUpdate);
         }
     }

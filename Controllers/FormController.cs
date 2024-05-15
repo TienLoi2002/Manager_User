@@ -2,12 +2,13 @@
 using Manager_User_API.DTO;
 using Manager_User_API.IServices;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class FormController : Controller
+    public class FormController : ControllerBase
     {
         private readonly IFormService _formService;
 
@@ -16,32 +17,29 @@ namespace Manager_User_API.Controllers
             _formService = formService;
         }
 
-        [HttpGet]
-        [Route("/api/[controller]/get-all-forms")]
-        public IActionResult GetAllForms()
+        [HttpGet("get-all-forms")]
+        public async Task<IActionResult> GetAllFormsAsync()
         {
-            var forms = _formService.GetAllForms();
+            var forms = await _formService.GetAllFormsAsync();
             return Ok(forms);
         }
 
-        [HttpPost]
-        [Route("/api/[controller]/add-form")]
-
-        public IActionResult AddForm([FromBody] FormDTO form)
+        [HttpPost("add-form")]
+        public async Task<IActionResult> AddFormAsync([FromBody] FormDTO form)
         {
-            var createdForm = _formService.AddForm(form);
+            var createdForm = await _formService.AddFormAsync(form);
             if (createdForm == null)
             {
                 return BadRequest("Unable to add form");
             }
-            return CreatedAtAction(nameof(GetFormById), new { id = createdForm.FormId }, createdForm);
+            return CreatedAtAction(nameof(GetFormByIdAsync), new { id = createdForm.FormId }, createdForm);
         }
 
         [HttpGet("{id}")]
-
-        public IActionResult GetFormById(int id)
+        public async Task<IActionResult> GetFormByIdAsync(int id)
         {
-            var form = _formService.GetAllForms().Find(f => f.FormId == id);
+            var forms = await _formService.GetAllFormsAsync();
+            var form = forms.Find(f => f.FormId == id);
             if (form == null)
             {
                 return NotFound();
@@ -50,14 +48,13 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{id}")]
-
-        public IActionResult UpdateForm(int id, [FromBody] FormDTO form)
+        public async Task<IActionResult> UpdateFormAsync(int id, [FromBody] FormDTO form)
         {
             if (id != form.FormId)
             {
                 return BadRequest("ID mismatch");
             }
-            var updatedForm = _formService.UpdateForm(form);
+            var updatedForm = await _formService.UpdateFormAsync(form);
             if (updatedForm == null)
             {
                 return NotFound();
@@ -66,10 +63,9 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
-
-        public IActionResult DeleteForm(int id)
+        public async Task<IActionResult> DeleteFormAsync(int id)
         {
-            bool result = _formService.DeleteForm(id);
+            bool result = await _formService.DeleteFormAsync(id);
             if (!result)
             {
                 return NotFound("Form not found");

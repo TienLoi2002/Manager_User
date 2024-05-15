@@ -3,6 +3,10 @@ using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_Data;
 using Manager_User_API.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Manager_User_API.Repositories
 {
@@ -17,52 +21,50 @@ namespace Manager_User_API.Repositories
             _mapper = mapper;
         }
 
-        public UserDTO AddUser(UserDTO user)
+        public async Task<UserDTO> AddAsync(UserDTO user)
         {
             var userEntity = _mapper.Map<User>(user);
             _context.Users.Add(userEntity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<UserDTO>(userEntity);
         }
 
-        public bool DeleteUser(int userId)
+        public async Task<bool> DeleteAsync(int userId)
         {
-            var user = _context.Users.Find(userId);
+            var user = await _context.Users.FindAsync(userId);
             if (user == null)
             {
                 return false;
             }
 
             _context.Users.Remove(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public List<UserDTO> GetAllUsers()
+        public async Task<List<UserDTO>> GetAllAsync()
         {
-            var users = _context.Users.ToList();
+            var users = await _context.Users.ToListAsync();
             return _mapper.Map<List<UserDTO>>(users);
         }
 
-        public UserDTO UpdateUser(UserDTO user)
+        public async Task<UserDTO> GetByIdAsync(int userId)
         {
-            var userToUpdate = _context.Users.Find(user.Id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<UserDTO> UpdateAsync(UserDTO user)
+        {
+            var userToUpdate = await _context.Users.FindAsync(user.Id);
             if (userToUpdate == null)
             {
                 return null;
             }
 
             _mapper.Map(user, userToUpdate);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return _mapper.Map<UserDTO>(userToUpdate);
         }
-
-        public UserDTO GetUserById(int userId)
-        {
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-            return _mapper.Map<UserDTO>(user);
-
-        }
-
     }
 }
