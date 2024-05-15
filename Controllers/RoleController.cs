@@ -2,9 +2,11 @@
 using Manager_User_API.DTO;
 using Manager_User_API.IServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Manager_User_API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class RoleController : Controller

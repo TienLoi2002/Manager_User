@@ -10,6 +10,33 @@ namespace Manager_User_API.Service
     {
         private readonly IUnitOfWork _unitOfWork;
 
+        public async Task<UserDTO> AuthenticateAsync(string username, string password)
+        {
+            var userDto = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            if (userDto == null || userDto.Password != password)
+            {
+                return null;
+            }
+            return userDto;
+        }
+
+
+        public async Task RegisterAsync(RegisterDTO registerDto)
+        {
+            var user = new UserDTO
+            {
+                Username = registerDto.Username,
+                Password = registerDto.Password,
+                PhoneNumber = registerDto.PhoneNumber,
+                PositionId = registerDto.PositionId,
+                ContractSalary = registerDto.ContractSalary,
+                DaysOff = registerDto.DaysOff
+            };
+
+            await _unitOfWork.UserRepository.AddAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

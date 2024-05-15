@@ -21,6 +21,12 @@ namespace Manager_User_API.Repositories
             _mapper = mapper;
         }
 
+        public async Task<UserDTO> GetUserByUsernameAsync(string username)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
+            return _mapper.Map<UserDTO>(user);
+        }
+
         public async Task<UserDTO> AddAsync(UserDTO user)
         {
             var userEntity = _mapper.Map<User>(user);

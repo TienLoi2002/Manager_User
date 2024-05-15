@@ -1,11 +1,13 @@
 ﻿using Manager_User_API.DTO;
 using Manager_User_API.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Manager_User_API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PositionController : ControllerBase

@@ -4,6 +4,8 @@ namespace Manager_User_API.DTO
 {
     public class UserDTO
     {
+        public string Username { get; set; }
+        public string Password { get; set; }
         public int Id { get; set; }
         public string? PhoneNumber { get; set; }
         public int PositionId { get; set; } // Foreign key

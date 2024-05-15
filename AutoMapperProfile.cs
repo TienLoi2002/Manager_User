@@ -8,26 +8,14 @@ namespace Manager_User_API
     {
         public AutoMapperProfile()
         {
-            CreateMap<ClaimDTO, Claim>();
-            CreateMap<Claim, ClaimDTO>();
-
-            CreateMap<FormDTO, Form>();
-            CreateMap<Form, FormDTO>();
-
-            CreateMap<PositionDTO, Position>();
-            CreateMap<Position, PositionDTO>();
-
-            CreateMap<Role, RoleDTO>(); 
-            CreateMap<RoleDTO, Role>();
-
-            CreateMap<UserClaim, UserClaimDTO>();
-            CreateMap<UserClaimDTO, UserClaim>();
-
-            CreateMap<User, UserDTO>();
-            CreateMap<UserDTO, User>();
-
-            CreateMap<UserRole, UserRoleDTO>();
-            CreateMap<UserRoleDTO, UserRole>();
+            CreateMap<ClaimDTO, Claim>().ReverseMap();
+            CreateMap<FormDTO, Form>().ReverseMap();
+            CreateMap<PositionDTO, Position>().ReverseMap();
+            CreateMap<Role, RoleDTO>().ReverseMap(); 
+            CreateMap<UserClaim, UserClaimDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<UserRole, UserRoleDTO>().ReverseMap();
+            CreateMap<RegisterDTO, User>();
         }
     }
 }

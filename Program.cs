@@ -7,6 +7,7 @@ namespace Manager_User
     {
         public static void Main(string[] args)
         {
+           
             CreateHostBuilder(args).Build().Run();
         }
 

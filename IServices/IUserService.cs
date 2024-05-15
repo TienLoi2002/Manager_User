@@ -11,5 +11,8 @@ namespace Manager_User_API.IServices
         Task<UserDTO> UpdateAsync(UserDTO user);
         Task<bool> DeleteAsync(int userId);
         Task<UserDTO> GetByIdAsync(int userId);
+
+        Task<UserDTO> AuthenticateAsync(string username, string password);
+        Task RegisterAsync(RegisterDTO registerDto);
     }
 }
