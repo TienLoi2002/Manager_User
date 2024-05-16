@@ -20,6 +20,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetAllUserRoles()
         {
             var userRoles = await _userRoleService.GetAllUserRolesAsync();
@@ -27,6 +28,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "add")]
         public async Task<IActionResult> AddUserRole([FromBody] UserRoleDTO userRole)
         {
             var createdUserRole = await _userRoleService.AddUserRoleAsync(userRole);
@@ -38,6 +40,8 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("{userId}/{roleId}")]
+        [Authorize(Policy = "get")]
+
         public async Task<IActionResult> GetUserRoleById(int userId, int roleId)
         {
             var userRole = await _userRoleService.GetUserRoleByIdAsync(userId, roleId);
@@ -49,6 +53,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{userId}/{roleId}")]
+        [Authorize(Policy = "update")]
         public async Task<IActionResult> UpdateUserRole(int userId, int roleId, [FromBody] UserRoleDTO userRole)
         {
             if (userId != userRole.UserId || roleId != userRole.RoleId)
@@ -64,6 +69,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{userId}/{roleId}")]
+        [Authorize(Policy = "delete")]
         public async Task<IActionResult> DeleteUserRole(int userId, int roleId)
         {
             bool result = await _userRoleService.DeleteUserRoleAsync(userId, roleId);

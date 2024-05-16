@@ -25,6 +25,7 @@ namespace Manager_User_API.Controllers
 
         [HttpGet]
         [Route("/api/[controller]/get-all-users")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetAllAsync()
         {
             var users = await _userService.GetAllAsync();
@@ -33,6 +34,7 @@ namespace Manager_User_API.Controllers
 
         [HttpPost]
         [Route("/api/[controller]/add-user")]
+        [Authorize(Policy = "add")]
         public async Task<IActionResult> AddAsync([FromBody] UserDTO user)
         {
             var createdUser = await _userService.AddAsync(user);
@@ -44,6 +46,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var user = await _userService.GetByIdAsync(id);
@@ -55,6 +58,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "update")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UserDTO user)
         {
             if (id != user.Id)
@@ -70,6 +74,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "delete")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             bool result = await _userService.DeleteAsync(id);

@@ -20,24 +20,15 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("get-all-forms")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetAllFormsAsync()
         {
             var forms = await _formService.GetAllFormsAsync();
             return Ok(forms);
         }
 
-        [HttpPost("add-form")]
-        public async Task<IActionResult> AddFormAsync([FromBody] FormDTO form)
-        {
-            var createdForm = await _formService.AddFormAsync(form);
-            if (createdForm == null)
-            {
-                return BadRequest("Unable to add form");
-            }
-            return CreatedAtAction(nameof(GetFormByIdAsync), new { id = createdForm.FormId }, createdForm);
-        }
-
         [HttpGet("{id}")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetFormByIdAsync(int id)
         {
             var forms = await _formService.GetAllFormsAsync();
@@ -49,7 +40,21 @@ namespace Manager_User_API.Controllers
             return Ok(form);
         }
 
+        [HttpPost("add-form")]
+        [Authorize(Policy = "add")]
+
+        public async Task<IActionResult> AddFormAsync([FromBody] FormDTO form)
+        {
+            var createdForm = await _formService.AddFormAsync(form);
+            if (createdForm == null)
+            {
+                return BadRequest("Unable to add form");
+            }
+            return CreatedAtAction(nameof(GetFormByIdAsync), new { id = createdForm.FormId }, createdForm);
+        }
+
         [HttpPut("{id}")]
+        [Authorize(Policy = "update")]
         public async Task<IActionResult> UpdateFormAsync(int id, [FromBody] FormDTO form)
         {
             if (id != form.FormId)
@@ -65,6 +70,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "delete")]
         public async Task<IActionResult> DeleteFormAsync(int id)
         {
             bool result = await _formService.DeleteFormAsync(id);

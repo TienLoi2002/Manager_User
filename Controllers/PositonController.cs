@@ -20,24 +20,15 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("get-all-positions")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetAllPositionsAsync()
         {
             var positions = await _positionService.GetAllPositionsAsync();
             return Ok(positions);
         }
 
-        [HttpPost("add-position")]
-        public async Task<IActionResult> AddPositionAsync([FromBody] PositionDTO position)
-        {
-            var createdPosition = await _positionService.AddPositionAsync(position);
-            if (createdPosition == null)
-            {
-                return BadRequest("Unable to add position");
-            }
-            return CreatedAtAction(nameof(GetPositionByIdAsync), new { id = createdPosition.PositionId }, createdPosition);
-        }
-
         [HttpGet("{id}")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetPositionByIdAsync(int id)
         {
             var position = await _positionService.GetPositionByIdAsync(id);
@@ -48,7 +39,21 @@ namespace Manager_User_API.Controllers
             return Ok(position);
         }
 
+        [HttpPost("add-position")]
+        [Authorize(Policy = "add")]
+        public async Task<IActionResult> AddPositionAsync([FromBody] PositionDTO position)
+        {
+            var createdPosition = await _positionService.AddPositionAsync(position);
+            if (createdPosition == null)
+            {
+                return BadRequest("Unable to add position");
+            }
+            return CreatedAtAction(nameof(GetPositionByIdAsync), new { id = createdPosition.PositionId }, createdPosition);
+        }
+
+
         [HttpPut("{id}")]
+        [Authorize(Policy = "update")]
         public async Task<IActionResult> UpdatePositionAsync(int id, [FromBody] PositionDTO position)
         {
             if (id != position.PositionId)
@@ -64,6 +69,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "delete")]
         public async Task<IActionResult> DeletePositionAsync(int id)
         {
             bool result = await _positionService.DeletePositionAsync(id);

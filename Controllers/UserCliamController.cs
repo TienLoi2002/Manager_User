@@ -20,25 +20,15 @@ namespace Manager_User_API.Controllers
 
         [HttpGet]
         [Route("/api/[controller]/get-all-user-claims")]
+        [Authorize(Policy = "get")]
         public IActionResult GetAllUserClaims()
         {
             var userClaims = _userClaimService.GetAllUserClaims();
             return Ok(userClaims);
         }
-
-        [HttpPost]
-        [Route("/api/[controller]/add-user-claim")]
-        public IActionResult AddUserClaim([FromBody] UserClaimDTO userClaim)
-        {
-            var createdUserClaim = _userClaimService.AddUserClaim(userClaim);
-            if (createdUserClaim == null)
-            {
-                return BadRequest("Unable to add user claim");
-            }
-            return CreatedAtAction(nameof(GetUserClaimById), new { userId = createdUserClaim.UserId, claimId = createdUserClaim.ClaimId }, createdUserClaim);
-        }
-
+        
         [HttpGet("{userId}/{claimId}")]
+        [Authorize(Policy = "get")]
         public IActionResult GetUserClaimById(int userId, int claimId)
         {
             var userClaim = _userClaimService.GetUserClaimById(userId, claimId);
@@ -49,7 +39,22 @@ namespace Manager_User_API.Controllers
             return Ok(userClaim);
         }
 
+        [HttpPost]
+        [Route("/api/[controller]/add-user-claim")]
+        [Authorize(Policy = "add")]
+
+        public IActionResult AddUserClaim([FromBody] UserClaimDTO userClaim)
+        {
+            var createdUserClaim = _userClaimService.AddUserClaim(userClaim);
+            if (createdUserClaim == null)
+            {
+                return BadRequest("Unable to add user claim");
+            }
+            return CreatedAtAction(nameof(GetUserClaimById), new { userId = createdUserClaim.UserId, claimId = createdUserClaim.ClaimId }, createdUserClaim);
+        }
+
         [HttpPut("{userId}/{claimId}")]
+        [Authorize(Policy = "update")]
         public IActionResult UpdateUserClaim(int userId, int claimId, [FromBody] UserClaimDTO userClaim)
         {
             if (userId != userClaim.UserId || claimId != userClaim.ClaimId)
@@ -65,6 +70,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{userId}/{claimId}")]
+        [Authorize(Policy = "delete")]
         public IActionResult DeleteUserClaim(int userId, int claimId)
         {
             bool result = _userClaimService.DeleteUserClaim(userId, claimId);

@@ -20,24 +20,15 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("get-all-claims")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetAllClaims()
         {
             var claims = await _claimService.GetAllClaimsAsync();
             return Ok(claims);
         }
 
-        [HttpPost("add-claim")]
-        public async Task<IActionResult> AddClaim([FromBody] ClaimDTO claim)
-        {
-            var createdClaim = await _claimService.AddClaimAsync(claim);
-            if (createdClaim == null)
-            {
-                return BadRequest("Unable to add claim");
-            }
-            return CreatedAtAction(nameof(GetClaimById), new { id = createdClaim.ClaimId }, createdClaim);
-        }
-
         [HttpGet("{id}")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetClaimById(int id)
         {
             var claims = await _claimService.GetAllClaimsAsync();
@@ -49,7 +40,21 @@ namespace Manager_User_API.Controllers
             return Ok(claim);
         }
 
+        [HttpPost("add-claim")]
+        [Authorize(Policy = "add")]
+
+        public async Task<IActionResult> AddClaim([FromBody] ClaimDTO claim)
+        {
+            var createdClaim = await _claimService.AddClaimAsync(claim);
+            if (createdClaim == null)
+            {
+                return BadRequest("Unable to add claim");
+            }
+            return CreatedAtAction(nameof(GetClaimById), new { id = createdClaim.ClaimId }, createdClaim);
+        }
+
         [HttpPut("{id}")]
+        [Authorize(Policy = "update")]
         public async Task<IActionResult> UpdateClaim(int id, [FromBody] ClaimDTO claim)
         {
             if (id != claim.ClaimId)
@@ -65,6 +70,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "delete")]
         public async Task<IActionResult> DeleteClaim(int id)
         {
             bool result = await _claimService.DeleteClaimAsync(id);

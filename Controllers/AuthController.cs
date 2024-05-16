@@ -1,8 +1,10 @@
 ﻿using Manager_User_API.DTO;
 using Manager_User_API.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
+[AllowAnonymous]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
@@ -24,7 +26,7 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
-        var token = _tokenHelper.GenerateToken(user.Username);
+        var token = _tokenHelper.GenerateTokenAsync(user.Username);
         return Ok(new { token });
     }
 

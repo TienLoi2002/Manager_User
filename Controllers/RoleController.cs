@@ -19,24 +19,15 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpGet("get-all-role")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetAllRoles()
         {
             var roles = await _roleService.GetAllRolesAsync();
             return Ok(roles);
         }
-
-        [HttpPost("add-role")]
-        public async Task<IActionResult> AddRole([FromBody] RoleDTO role)
-        {
-            var createdRole = await _roleService.AddRoleAsync(role);
-            if (createdRole == null)
-            {
-                return BadRequest("Unable to add role");
-            }
-            return CreatedAtAction(nameof(GetRoleById), new { id = createdRole.RoleId }, createdRole);
-        }
-
+        
         [HttpGet("{id}")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetRoleById(int id)
         {
             var roles = await _roleService.GetAllRolesAsync();
@@ -48,7 +39,22 @@ namespace Manager_User_API.Controllers
             return Ok(role);
         }
 
+        [HttpPost("add-role")]
+        [Authorize(Policy = "add")]
+
+        public async Task<IActionResult> AddRole([FromBody] RoleDTO role)
+        {
+            var createdRole = await _roleService.AddRoleAsync(role);
+            if (createdRole == null)
+            {
+                return BadRequest("Unable to add role");
+            }
+            return CreatedAtAction(nameof(GetRoleById), new { id = createdRole.RoleId }, createdRole);
+        }
+
+
         [HttpPut("{id}")]
+        [Authorize(Policy = "update")]
         public async Task<IActionResult> UpdateRole(int id, [FromBody] RoleDTO role)
         {
             if (id != role.RoleId)
@@ -64,6 +70,7 @@ namespace Manager_User_API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "delete")]
         public async Task<IActionResult> DeleteRole(int id)
         {
             bool result = await _roleService.DeleteRoleAsync(id);
