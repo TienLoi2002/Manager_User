@@ -13,6 +13,8 @@ namespace Manager_User_Data
         public DbSet<UserRole>? UserRoles { get; set; }
         public DbSet<UserClaim>? UserClaims { get; set; }
         public DbSet<Position>? Positions { get; set; }
+        public DbSet<RoleClaim> RoleClaims { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,6 +38,32 @@ namespace Manager_User_Data
 
             modelBuilder.Entity<UserClaim>()
                 .HasKey(uc => new { uc.UserId, uc.ClaimId });
+
+            modelBuilder.Entity<UserRole>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.UserId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.Role)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.RoleId);
+
+            modelBuilder.Entity<RoleClaim>()
+                .HasKey(rc => new { rc.RoleId, rc.ClaimId });
+
+            modelBuilder.Entity<RoleClaim>()
+                .HasOne(rc => rc.Role)
+                .WithMany(r => r.RoleClaims)
+                .HasForeignKey(rc => rc.RoleId);
+
+            modelBuilder.Entity<RoleClaim>()
+                .HasOne(rc => rc.Claim)
+                .WithMany(c => c.RoleClaims)
+                .HasForeignKey(rc => rc.ClaimId);
 
             modelBuilder.Entity<Form>()
                 .HasOne(f => f.User)

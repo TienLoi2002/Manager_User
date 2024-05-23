@@ -2,6 +2,7 @@
 using Manager_User_API.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 [ApiController]
 [AllowAnonymous]
@@ -26,8 +27,24 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
-        var token = _tokenHelper.GenerateTokenAsync(user.Username);
-        return Ok(new { token });
+        var token = await _tokenHelper.GenerateTokenAsync(user.Username);
+        var refreshToken = _tokenHelper.GenerateRefreshToken();
+
+        await _userService.SaveRefreshTokenAsync(user.Username, refreshToken.Token);
+
+        return Ok(new { token, refreshToken = refreshToken.Token });
+    }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
+    {
+        var response = await _userService.RefreshTokenAsync(request.Token, request.RefreshToken);
+        if (response == null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(response);
     }
 
     [HttpPost("register")]
@@ -37,4 +54,3 @@ public class AuthController : ControllerBase
         return Ok();
     }
 }
-

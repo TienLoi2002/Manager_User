@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Manager_User_API.IRepositories;
+using Manager_User_API.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,14 +25,13 @@ public class TokenHelper
 
     public async Task<string> GenerateTokenAsync(string username)
     {
-
         var jwtSettings = _configuration.GetSection("Jwt");
         var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
         var tokenHandler = new JwtSecurityTokenHandler();
 
         var userClaimsDTO = await _userClaimRepository.GetUserClaimsAsync(username);
-        var claims = userClaimsDTO.Select(c => new Claim(c.ClaimType, c.ClaimValue)).ToList();
-        claims.Add(new Claim(ClaimTypes.Name, username));
+        var claims = userClaimsDTO.Select(c => new System.Security.Claims.Claim(c.ClaimType, c.ClaimValue)).ToList();
+        claims.Add(new System.Security.Claims.Claim(ClaimTypes.Name, username));
 
         var claimsIdentity = new ClaimsIdentity(claims);
 
@@ -45,5 +46,42 @@ public class TokenHelper
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+
+    public RefreshToken GenerateRefreshToken()
+    {
+        var randomBytes = new byte[64];
+        using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+        {
+            rng.GetBytes(randomBytes);
+            return new RefreshToken
+            {
+                Token = Convert.ToBase64String(randomBytes),
+                Expires = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow
+            };
+        }
+    }
+
+    public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
+            ClockSkew = TimeSpan.Zero
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+        if (!(securityToken is JwtSecurityToken jwtSecurityToken) || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new SecurityTokenException("Invalid token");
+        }
+
+        return principal;
     }
 }

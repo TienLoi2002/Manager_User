@@ -12,7 +12,6 @@ namespace Manager_User_API.DTO
         public decimal ContractSalary { get; set; }
         public int DaysOff { get; set; } // Ngày nghỉ phép không lương
 
-        // Navigation property để thể hiện mối quan hệ với Position
-        //public Position? Position { get; set; }
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

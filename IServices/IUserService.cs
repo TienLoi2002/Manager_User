@@ -14,5 +14,7 @@ namespace Manager_User_API.IServices
 
         Task<UserDTO> AuthenticateAsync(string username, string password);
         Task RegisterAsync(RegisterDTO registerDto);
+        Task SaveRefreshTokenAsync(string username, string refreshToken);
+        Task<AuthenticationResponse> RefreshTokenAsync(string token, string refreshToken);
     }
 }

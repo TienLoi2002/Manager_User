@@ -72,6 +72,8 @@ namespace Manager_User
 
             services.AddScoped<IUserIdClaimTypeAndCliamValueRepository, UserIdClaimTypeAndCliamValueRepository>();
 
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleService, RoleService>();
 

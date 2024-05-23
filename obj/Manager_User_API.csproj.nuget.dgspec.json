@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\Manager_User_API.csproj": {}
+    "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\Manager_User_API.csproj": {}
   },
   "projects": {
-    "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\Manager_User_API.csproj": {
+    "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\Manager_User_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\Manager_User_API.csproj",
+        "projectUniqueName": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\Manager_User_API.csproj",
         "projectName": "Manager_User_API",
-        "projectPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\Manager_User_API.csproj",
+        "projectPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\Manager_User_API.csproj",
         "packagesPath": "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\",
-        "outputPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\obj\\",
+        "outputPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -101,6 +101,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.29, 6.0.29]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.29, 6.0.29]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.29, 6.0.29]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.29, 6.0.29]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

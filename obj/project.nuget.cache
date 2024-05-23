@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "P9yrAGtbHVRsGID0+Szec9DcFkkyENz80Q7z5qF3KBHS39GsLvxF9d2y0rKMiuTDPOElIYzek9E4oZRTl9Ti1Q==",
+  "dgSpecHash": "HCyhEkHanGQ8SbU5DFe51DPpCGlu2YhfZz4MJXYh/p1Ka94Zdn0fG/E6TP5l1HlFT92fYIiwaMh+ymAgFfIm3w==",
   "success": true,
-  "projectFilePath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\Manager_User_API.csproj",
+  "projectFilePath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\Manager_User_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
@@ -236,7 +236,11 @@
     "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
+    "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.29\\microsoft.windowsdesktop.app.ref.6.0.29.nupkg.sha512",
+    "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.29\\microsoft.netcore.app.ref.6.0.29.nupkg.sha512",
+    "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.29\\microsoft.aspnetcore.app.ref.6.0.29.nupkg.sha512",
+    "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.29\\microsoft.netcore.app.host.win-x64.6.0.29.nupkg.sha512"
   ],
   "logs": []
 }

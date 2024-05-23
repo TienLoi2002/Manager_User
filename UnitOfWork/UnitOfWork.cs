@@ -16,7 +16,9 @@ namespace Manager_User_API.Repositories
         public IUserClaimRepository UserClaimRepository { get; private set; }
         public IUserRoleRepository UserRoleRepository { get; private set; }
 
-        public UnitOfWork(ApplicationDbContext context, IRoleRepository roleRepository, IClaimRepository claimRepository, IFormRepository formRepository, IPositionRepository positionRepository, IUserRepository userRepository , IUserClaimRepository userClaimRepository, IUserRoleRepository userRoleRepository)
+        public IRefreshTokenRepository RefreshTokensRepository {  get; private set; }
+
+        public UnitOfWork(ApplicationDbContext context, IRoleRepository roleRepository, IClaimRepository claimRepository, IFormRepository formRepository, IPositionRepository positionRepository, IUserRepository userRepository , IUserClaimRepository userClaimRepository, IUserRoleRepository userRoleRepository, IRefreshTokenRepository refreshTokensRepository)
         {
             _context = context;
             RoleRepository = roleRepository;
@@ -26,6 +28,8 @@ namespace Manager_User_API.Repositories
             UserRepository = userRepository;
             UserClaimRepository = userClaimRepository;
             UserRoleRepository = userRoleRepository;
+            RefreshTokensRepository = refreshTokensRepository;
+
         }
 
         public async Task<int> SaveChangesAsync()

@@ -12,6 +12,8 @@
 
         // Navigation property để thể hiện mối quan hệ với Position
         public Position? Position { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 
 }
