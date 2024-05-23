@@ -8,7 +8,7 @@
         public DateTime Created { get; set; }
         public DateTime? Revoked { get; set; }
         public bool IsActive => !Revoked.HasValue && !IsExpired;
-        public bool IsExpired => DateTime.UtcNow >= Expires;
+        public bool IsExpired => Expires <= DateTime.UtcNow;
         public int UserId { get; set; }
         public User User { get; set; }
     }

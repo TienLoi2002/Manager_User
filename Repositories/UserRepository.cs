@@ -23,7 +23,15 @@ namespace Manager_User_API.Repositories
 
         public async Task<UserDTO> GetUserByUsernameAsync(string username)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
+            var user = await _context.Users
+                                  .Include(u => u.RefreshTokens)
+                                  .SingleOrDefaultAsync(u => u.Username == username);
+
+            if (user == null)
+            {
+                return null;
+            }
+
             return _mapper.Map<UserDTO>(user);
         }
 

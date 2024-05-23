@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 [ApiController]
-[AllowAnonymous]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
@@ -19,6 +18,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
+
     public async Task<IActionResult> Login(LoginDTO loginDto)
     {
         var user = await _userService.AuthenticateAsync(loginDto.Username, loginDto.Password);
@@ -36,6 +37,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("refresh-token")]
+    [AllowAnonymous]
+
     public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
     {
         var response = await _userService.RefreshTokenAsync(request.Token, request.RefreshToken);
@@ -48,6 +51,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
+    [AllowAnonymous]
+
     public async Task<IActionResult> Register(RegisterDTO registerDto)
     {
         await _userService.RegisterAsync(registerDto);

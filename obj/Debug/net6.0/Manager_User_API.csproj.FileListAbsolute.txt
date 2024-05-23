@@ -560,3 +560,4 @@ D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\refint\Man
 D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\Manager_User_API.pdb
 D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\Manager_User_API.genruntimeconfig.cache
 D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\ref\Manager_User_API.dll
+D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\Manager_User_API.sourcelink.json
