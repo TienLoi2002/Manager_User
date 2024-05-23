@@ -13,6 +13,7 @@ namespace Manager_User_API.IRepositories
         IUserClaimRepository UserClaimRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
         IRefreshTokenRepository RefreshTokensRepository { get; }
+        
 
         Task<int> SaveChangesAsync();
     }

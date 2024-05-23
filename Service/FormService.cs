@@ -9,14 +9,21 @@ namespace Manager_User_API.Service
     public class FormService : IFormService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IImageUploadService _imageUploadService;
 
-        public FormService(IUnitOfWork unitOfWork)
+        public FormService(IUnitOfWork unitOfWork, IImageUploadService imageUploadService)
         {
             _unitOfWork = unitOfWork;
+            _imageUploadService = imageUploadService;
         }
 
-        public async Task<FormDTO> AddFormAsync(FormDTO form)
+        public async Task<FormDTO> AddFormAsync(FormDTO form, IFormFile image)
         {
+            if (image != null)
+            {
+                var imageUrl = await _imageUploadService.UploadImageAsync(image);
+                form.FilePath = imageUrl;
+            }
             var addedForm = await _unitOfWork.FormRepository.AddFormAsync(form);
             await _unitOfWork.SaveChangesAsync();
             return addedForm;

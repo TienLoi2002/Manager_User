@@ -42,16 +42,16 @@ namespace Manager_User_API.Controllers
 
         [HttpPost("add-form")]
         [Authorize(Policy = "add")]
-
-        public async Task<IActionResult> AddFormAsync([FromBody] FormDTO form)
+        public async Task<IActionResult> AddFormAsync([FromBody] FormDTO form, IFormFile image)
         {
-            var createdForm = await _formService.AddFormAsync(form);
+            var createdForm = await _formService.AddFormAsync(form, image);
             if (createdForm == null)
             {
                 return BadRequest("Unable to add form");
             }
             return CreatedAtAction(nameof(GetFormByIdAsync), new { id = createdForm.FormId }, createdForm);
         }
+
 
         [HttpPut("{id}")]
         [Authorize(Policy = "update")]

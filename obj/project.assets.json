@@ -11655,11 +11655,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\Manager_User_API.csproj",
+      "projectUniqueName": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\Manager_User_API.csproj",
       "projectName": "Manager_User_API",
-      "projectPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\Manager_User_API.csproj",
+      "projectPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\Manager_User_API.csproj",
       "packagesPath": "C:\\Users\\NguyenTienLoi\\.nuget\\packages\\",
-      "outputPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Abc\\Manager_User\\obj\\",
+      "outputPath": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

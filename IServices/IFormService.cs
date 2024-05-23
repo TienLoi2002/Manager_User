@@ -7,7 +7,7 @@ namespace Manager_User_API.IServices
     public interface IFormService
     {
         Task<List<FormDTO>> GetAllFormsAsync();
-        Task<FormDTO> AddFormAsync(FormDTO form);
+        Task<FormDTO> AddFormAsync(FormDTO form, IFormFile image);
         Task<FormDTO> UpdateFormAsync(FormDTO form);
         Task<bool> DeleteFormAsync(int formId);
     }

@@ -72,6 +72,8 @@ namespace Manager_User
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddScoped<IImageUploadService, ImageUploadService>();
+
             services.AddScoped<IUserIdClaimTypeAndCliamValueRepository, UserIdClaimTypeAndCliamValueRepository>();
 
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
