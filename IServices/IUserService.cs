@@ -16,5 +16,6 @@ namespace Manager_User_API.IServices
         Task RegisterAsync(RegisterDTO registerDto);
         Task SaveRefreshTokenAsync(string username, string refreshToken);
         Task<AuthenticationResponse> RefreshTokenAsync(string token, string refreshToken);
+        Task<decimal> GetUserSalaryAsync(int id);
     }
 }

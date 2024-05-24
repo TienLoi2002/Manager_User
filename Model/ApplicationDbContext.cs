@@ -1,7 +1,6 @@
-﻿using Manager_User_API.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Manager_User_Data
+namespace Manager_User_API.Model
 {
     public class ApplicationDbContext : DbContext
     {

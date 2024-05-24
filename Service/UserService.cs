@@ -11,11 +11,14 @@ namespace Manager_User_API.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly TokenHelper _tokenHelper;
+        private readonly ISalaryService _salaryService;
+        
 
-        public UserService(IUnitOfWork unitOfWork, TokenHelper tokenHelper)
+        public UserService(IUnitOfWork unitOfWork, TokenHelper tokenHelper, ISalaryService salaryService)
         {
             _unitOfWork = unitOfWork;
             _tokenHelper = tokenHelper;
+            _salaryService = salaryService;
         }
 
         public async Task<UserDTO> AuthenticateAsync(string username, string password)
@@ -121,6 +124,15 @@ namespace Manager_User_API.Service
             };
         }
 
+        public async Task<decimal> GetUserSalaryAsync(int id)
+        {
+            var user = await GetByIdAsync(id);
+            if (user == null)
+            {
+                throw new ArgumentException("User not found");
+            }
+            return _salaryService.CalculateSalary(user);
+        }
 
 
     }

@@ -1,10 +1,10 @@
-﻿using Manager_User_API;
-using Manager_User_API.DTO;
+﻿using Manager_User_API.DTO;
+using Manager_User_API.Helper;
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
+using Manager_User_API.Model;
 using Manager_User_API.Repositories;
 using Manager_User_API.Service;
-using Manager_User_Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
@@ -86,6 +86,7 @@ namespace Manager_User
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IImageUploadService, ImageUploadService>();
+            services.AddScoped<ISalaryService, SalaryService>();
 
             services.AddScoped<IUserIdClaimTypeAndCliamValueRepository, UserIdClaimTypeAndCliamValueRepository>();
 

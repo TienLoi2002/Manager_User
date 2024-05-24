@@ -4,7 +4,6 @@ using AutoMapper;
 using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_API.Model;
-using Manager_User_Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Manager_User_API.Repositories

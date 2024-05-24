@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
-using Manager_User_Data;
 using Manager_User_API.Model;
 using System.Collections.Generic;
 using System.Linq;

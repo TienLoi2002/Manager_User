@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Manager_User_API.IServices;
+using System;
 using System.Threading.Tasks;
 
 namespace Manager_User_API.IRepositories
@@ -13,6 +14,7 @@ namespace Manager_User_API.IRepositories
         IUserClaimRepository UserClaimRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
         IRefreshTokenRepository RefreshTokensRepository { get; }
+      
         
 
         Task<int> SaveChangesAsync();

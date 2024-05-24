@@ -1,5 +1,6 @@
 ﻿using Manager_User_API.IRepositories;
-using Manager_User_Data;
+using Manager_User_API.IServices;
+using Manager_User_API.Model;
 
 namespace Manager_User_API.Repositories
 {
@@ -17,7 +18,9 @@ namespace Manager_User_API.Repositories
         public IUserRoleRepository UserRoleRepository { get; private set; }
 
         public IRefreshTokenRepository RefreshTokensRepository {  get; private set; }
+      
 
+        
         public UnitOfWork(ApplicationDbContext context, IRoleRepository roleRepository, IClaimRepository claimRepository, IFormRepository formRepository, IPositionRepository positionRepository, IUserRepository userRepository , IUserClaimRepository userClaimRepository, IUserRoleRepository userRoleRepository, IRefreshTokenRepository refreshTokensRepository)
         {
             _context = context;

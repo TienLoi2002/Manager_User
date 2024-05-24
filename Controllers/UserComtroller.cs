@@ -85,5 +85,21 @@ namespace Manager_User_API.Controllers
             }
             return NoContent();
         }
+
+
+        [HttpGet("{id}/salary")]
+        public async Task<IActionResult> GetUserSalary(int id)
+        {
+            try
+            {
+                var salary = await _userService.GetUserSalaryAsync(id);
+
+                return Ok(new { Salary = salary });
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
