@@ -10,19 +10,26 @@ namespace Manager_User_API.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageUploadService _imageUploadService;
+        private readonly CloudinaryService _cloudinaryService;
 
-        public FormService(IUnitOfWork unitOfWork, IImageUploadService imageUploadService)
+        public FormService(IUnitOfWork unitOfWork, IImageUploadService imageUploadService, CloudinaryService cloudinaryService)
         {
             _unitOfWork = unitOfWork;
             _imageUploadService = imageUploadService;
+            _cloudinaryService = cloudinaryService;
         }
 
         public async Task<FormDTO> AddFormAsync(FormDTO form, IFormFile image)
         {
-            if (image != null)
+            /*if (image != null)
             {
                 var imageUrl = await _imageUploadService.UploadImageAsync(image);
                 form.FilePath = imageUrl;
+            }*/
+            if (image != null)
+            {
+                var imageUrlCloudinary = await _cloudinaryService.UploadImageCloudinaryAsync(image);
+                form.FilePath = imageUrlCloudinary;
             }
             form.DateSubmitted = DateTime.Now;
             var addedForm = await _unitOfWork.FormRepository.AddFormAsync(form);

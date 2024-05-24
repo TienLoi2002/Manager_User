@@ -1,4 +1,5 @@
 ﻿using Manager_User_API;
+using Manager_User_API.DTO;
 using Manager_User_API.IRepositories;
 using Manager_User_API.IServices;
 using Manager_User_API.Repositories;
@@ -69,7 +70,8 @@ namespace Manager_User
                
             });
 
-
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            
 
             // Register repositories and services
             RegisterServices(services);
@@ -78,6 +80,8 @@ namespace Manager_User
         private void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<TokenHelper>();
+
+            services.AddSingleton<CloudinaryService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
