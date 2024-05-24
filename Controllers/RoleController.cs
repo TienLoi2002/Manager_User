@@ -49,7 +49,8 @@ namespace Manager_User_API.Controllers
             {
                 return BadRequest("Unable to add role");
             }
-            return CreatedAtAction(nameof(GetRoleById), new { id = createdRole.RoleId }, createdRole);
+            return Ok("Add success");
+
         }
 
 

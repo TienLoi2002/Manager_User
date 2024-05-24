@@ -42,7 +42,8 @@ namespace Manager_User_API.Controllers
             {
                 return BadRequest("Unable to add user");
             }
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = createdUser.Id }, createdUser);
+            return Ok("Add success");
+
         }
 
         [HttpGet("{id}")]

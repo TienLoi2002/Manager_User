@@ -5,6 +5,7 @@ using Manager_User_API.Repositories;
 using Manager_User_API.Service;
 using Manager_User_Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -23,6 +24,13 @@ namespace Manager_User
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 104857600; // Giới hạn kích thước file upload (100MB)
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -54,10 +62,11 @@ namespace Manager_User
 
             services.AddAuthorization(options =>
             {
+                options.AddPolicy("get", policy => policy.RequireClaim("get"));
                 options.AddPolicy("add", policy => policy.RequireClaim("add"));
                 options.AddPolicy("update", policy => policy.RequireClaim("update"));
                 options.AddPolicy("delete", policy => policy.RequireClaim("delete"));
-                options.AddPolicy("get", policy => policy.RequireClaim("get"));
+               
             });
 
 
@@ -109,6 +118,7 @@ namespace Manager_User
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 

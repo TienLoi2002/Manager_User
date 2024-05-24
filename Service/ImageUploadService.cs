@@ -18,17 +18,24 @@ namespace Manager_User_API.Service
                 throw new ArgumentException("Image cannot be null or empty");
             }
 
-            var extension = Path.GetExtension(image.FileName).ToLower();
-            if (extension != ".jpg" && extension != ".jpeg")
+            // Kiểm tra WebRootPath có null không
+            if (string.IsNullOrEmpty(_webHostEnvironment.WebRootPath))
             {
-                throw new ArgumentException("Only JPG/JPEG images are supported");
+                throw new InvalidOperationException("WebRootPath is not set.");
             }
 
             // Đường dẫn lưu trữ hình ảnh trên máy chủ
             var imagePath = "/uploads/forms/" + Guid.NewGuid().ToString() + "_" + image.FileName;
 
             // Tạo đường dẫn lưu trữ trên máy chủ
-            var imagePathOnServer = Path.Combine(_webHostEnvironment.WebRootPath, imagePath);
+            var imagePathOnServer = Path.Combine(_webHostEnvironment.WebRootPath, imagePath.TrimStart('/'));
+
+            // Tạo thư mục nếu chưa tồn tại
+            var directory = Path.GetDirectoryName(imagePathOnServer);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
 
             // Lưu hình ảnh vào đường dẫn được chỉ định trên máy chủ
             using (var stream = new FileStream(imagePathOnServer, FileMode.Create))
@@ -39,5 +46,6 @@ namespace Manager_User_API.Service
             return imagePath;
         }
     }
+
 
 }

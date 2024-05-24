@@ -48,7 +48,8 @@ namespace Manager_User_API.Controllers
             {
                 return BadRequest("Unable to add position");
             }
-            return CreatedAtAction(nameof(GetPositionByIdAsync), new { id = createdPosition.PositionId }, createdPosition);
+            return Ok("Add success");
+
         }
 
 

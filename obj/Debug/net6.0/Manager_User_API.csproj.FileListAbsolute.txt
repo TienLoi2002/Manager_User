@@ -562,3 +562,4 @@ D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\Manager_Us
 D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\ref\Manager_User_API.dll
 D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Abc\Manager_User\obj\Debug\net6.0\Manager_User_API.sourcelink.json
 D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Manager_User\Manager_User\obj\Debug\net6.0\Manager_User_API.sourcelink.json
+D:\20DTHE4\Nam_IV\Hoc_Ky_II\ThucTap\Manager_User\Manager_User\bin\Debug\net6.0\Manager_User_API.staticwebassets.runtime.json

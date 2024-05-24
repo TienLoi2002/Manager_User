@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\wwwroot\\uploads\\forms\\27939e23-28f3-408e-995c-fcbc38be8350_avatar.jpg",
+      "PackagePath": "staticwebassets\\uploads\\forms\\27939e23-28f3-408e-995c-fcbc38be8350_avatar.jpg"
+    },
+    {
+      "Id": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\wwwroot\\uploads\\forms\\596d06ca-2962-4217-a738-b54d6808942b_avatar.jpg",
+      "PackagePath": "staticwebassets\\uploads\\forms\\596d06ca-2962-4217-a738-b54d6808942b_avatar.jpg"
+    },
+    {
+      "Id": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\wwwroot\\uploads\\forms\\69133584-c1b0-45d7-9afb-dd1f626f7eed_avatar.jpg",
+      "PackagePath": "staticwebassets\\uploads\\forms\\69133584-c1b0-45d7-9afb-dd1f626f7eed_avatar.jpg"
+    },
+    {
+      "Id": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\wwwroot\\uploads\\forms\\93e18faa-b5a8-49a5-95ab-1c726e80c723_avatar.jpg",
+      "PackagePath": "staticwebassets\\uploads\\forms\\93e18faa-b5a8-49a5-95ab-1c726e80c723_avatar.jpg"
+    },
+    {
+      "Id": "D:\\20DTHE4\\Nam_IV\\Hoc_Ky_II\\ThucTap\\Manager_User\\Manager_User\\wwwroot\\uploads\\forms\\c9b682cc-d70a-401e-8f01-ced4cef8b3be_avatar.jpg",
+      "PackagePath": "staticwebassets\\uploads\\forms\\c9b682cc-d70a-401e-8f01-ced4cef8b3be_avatar.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Manager_User_API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.Manager_User_API.props",
+      "PackagePath": "build\\Manager_User_API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.Manager_User_API.props",
+      "PackagePath": "buildMultiTargeting\\Manager_User_API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.Manager_User_API.props",
+      "PackagePath": "buildTransitive\\Manager_User_API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

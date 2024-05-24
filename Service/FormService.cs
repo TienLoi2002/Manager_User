@@ -24,6 +24,7 @@ namespace Manager_User_API.Service
                 var imageUrl = await _imageUploadService.UploadImageAsync(image);
                 form.FilePath = imageUrl;
             }
+            form.DateSubmitted = DateTime.Now;
             var addedForm = await _unitOfWork.FormRepository.AddFormAsync(form);
             await _unitOfWork.SaveChangesAsync();
             return addedForm;

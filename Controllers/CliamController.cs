@@ -50,7 +50,7 @@ namespace Manager_User_API.Controllers
             {
                 return BadRequest("Unable to add claim");
             }
-            return CreatedAtAction(nameof(GetClaimById), new { id = createdClaim.ClaimId }, createdClaim);
+            return Ok("Add success");
         }
 
         [HttpPut("{id}")]
