@@ -14,14 +14,14 @@ namespace Manager_User_API.Repositories
         public IPositionRepository PositionRepository { get; private set; }
         public IUserRepository UserRepository { get; private set; }
 
-        public IUserClaimRepository UserClaimRepository { get; private set; }
+       // public IUserClaimRepository UserClaimRepository { get; private set; }
         public IUserRoleRepository UserRoleRepository { get; private set; }
 
         public IRefreshTokenRepository RefreshTokensRepository {  get; private set; }
       
 
         
-        public UnitOfWork(ApplicationDbContext context, IRoleRepository roleRepository, IClaimRepository claimRepository, IFormRepository formRepository, IPositionRepository positionRepository, IUserRepository userRepository , IUserClaimRepository userClaimRepository, IUserRoleRepository userRoleRepository, IRefreshTokenRepository refreshTokensRepository)
+        public UnitOfWork(ApplicationDbContext context, IRoleRepository roleRepository, IClaimRepository claimRepository, IFormRepository formRepository, IPositionRepository positionRepository, IUserRepository userRepository ,/* IUserClaimRepository userClaimRepository,*/ IUserRoleRepository userRoleRepository, IRefreshTokenRepository refreshTokensRepository)
         {
             _context = context;
             RoleRepository = roleRepository;
@@ -29,7 +29,7 @@ namespace Manager_User_API.Repositories
             FormRepository = formRepository;
             PositionRepository = positionRepository;
             UserRepository = userRepository;
-            UserClaimRepository = userClaimRepository;
+           // UserClaimRepository = userClaimRepository;
             UserRoleRepository = userRoleRepository;
             RefreshTokensRepository = refreshTokensRepository;
 

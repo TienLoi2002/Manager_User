@@ -88,6 +88,7 @@ namespace Manager_User_API.Controllers
 
 
         [HttpGet("{id}/salary")]
+        [Authorize(Policy = "get")]
         public async Task<IActionResult> GetUserSalary(int id)
         {
             try

@@ -2,7 +2,7 @@
 using Manager_User_API.DTO;
 using Manager_User_API.Model;
 
-namespace Manager_User_API
+namespace Manager_User_API.Helper
 {
     public class AutoMapperProfile : Profile
     {
@@ -11,8 +11,8 @@ namespace Manager_User_API
             CreateMap<ClaimDTO, Claim>().ReverseMap();
             CreateMap<FormDTO, Form>().ReverseMap();
             CreateMap<PositionDTO, Position>().ReverseMap();
-            CreateMap<Role, RoleDTO>().ReverseMap(); 
-            CreateMap<UserClaim, UserClaimDTO>().ReverseMap();
+            CreateMap<Role, RoleDTO>().ReverseMap();
+          //  CreateMap<UserClaim, UserClaimDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<UserRole, UserRoleDTO>().ReverseMap();
             CreateMap<RegisterDTO, User>();

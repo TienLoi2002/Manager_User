@@ -10,7 +10,7 @@ namespace Manager_User_API.Model
         public DbSet<Role>? Roles { get; set; }
         public DbSet<Claim>? Claims { get; set; }
         public DbSet<UserRole>? UserRoles { get; set; }
-        public DbSet<UserClaim>? UserClaims { get; set; }
+       // public DbSet<UserClaim>? UserClaims { get; set; }
         public DbSet<Position>? Positions { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
@@ -35,9 +35,9 @@ namespace Manager_User_API.Model
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
-            modelBuilder.Entity<UserClaim>()
+            /*modelBuilder.Entity<UserClaim>()
                 .HasKey(uc => new { uc.UserId, uc.ClaimId });
-
+*/
             modelBuilder.Entity<UserRole>()
             .HasKey(ur => new { ur.UserId, ur.RoleId });
 

@@ -104,8 +104,8 @@ namespace Manager_User
             services.AddScoped<IPositionRepository, PositionRepository>();
             services.AddScoped<IPositionService, PositionService>();
 
-            services.AddScoped<IUserClaimRepository, UserClaimRepository>();
-            services.AddScoped<IUserClaimService, UserClaimService>();
+           /* services.AddScoped<IUserClaimRepository, UserClaimRepository>();
+            services.AddScoped<IUserClaimService, UserClaimService>();*/
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();

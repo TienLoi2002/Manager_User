@@ -24,13 +24,15 @@ namespace Manager_User_API.Repositories
 
         public async Task<List<UserIdClaimTypeAndCliamValueDTO>> GetUserClaimsAsync(string username)
         {
-            var userClaims = await (from uc in _context.UserClaims
-                                     join u in _context.Users on uc.UserId equals u.Id
-                                     join c in _context.Claims on uc.ClaimId equals c.ClaimId
+            var userClaims = await (from u in _context.Users 
+                                     join ur in _context.UserRoles on u.Id equals ur.UserId
+                                     join r in _context.Roles on ur.RoleId equals r.RoleId
+                                     join rc in _context.RoleClaims on r.RoleId equals rc.RoleId
+                                     join c in _context.Claims on rc.ClaimId equals c.ClaimId
                                    where u.Username == username
                                    select new UserIdClaimTypeAndCliamValueDTO
                                    {
-                                       UserId = uc.UserId,
+                                       UserId = u.Id,
                                        ClaimType = c.ClaimType,
                                        ClaimValue = c.ClaimValue
                                    }).ToListAsync();
